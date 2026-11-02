@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tüftelinsel">
+<meta name="theme-color" content="#0f142d">
+<title>Tüftelinsel</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<!-- Anzeige im Spiel -->
+<div id="hud" hidden>
+  <div id="cross"><i></i></div>
+  <div id="aim"></div>
+  <div id="topbar">
+    <button id="bMenu" title="Menü (Esc)">☰</button>
+    <button id="bSpawn" title="Bauteile (Tab)">📦 <span>Bauteile</span></button>
+    <button id="bUndo" title="Rückgängig (Z)">↶</button>
+    <span id="count"></span>
+  </div>
+  <div id="toolinfo"><b id="toolname"></b><span id="toolhint"></span></div>
+  <div id="tools"></div>
+  <div id="msgs"></div>
+  <div id="seatinfo" hidden>Du sitzt am Steuer: Stick = fahren, <b>⤒</b> = Düsen</div>
+
+  <!-- Touch-Steuerung -->
+  <div id="touch">
+    <div id="stick"><i></i></div>
+    <button class="tb" id="bAct"><span>✋</span></button>
+    <button class="tb small" id="bAlt"><span>❄️</span><em>Einfrieren</em></button>
+    <button class="tb small" id="bJump"><span>⤒</span><em>Springen</em></button>
+    <button class="tb small" id="bUse"><span>👆</span><em>Benutzen</em></button>
+    <div id="grabctl" hidden>
+      <button class="tb tiny" id="bFar">＋</button>
+      <button class="tb tiny" id="bNear">－</button>
+      <button class="tb tiny" id="bRot">⟳</button>
+    </div>
+  </div>
+  <div id="lockhint" hidden>Klicke ins Bild, um weiterzuspielen</div>
+</div>
+
+<!-- Bauteile-Menü -->
+<div id="spawn" hidden><div class="panel wide"><header><h2>Bauteile</h2><button class="backbtn" data-close>Schließen ✕</button></header><div id="spawngrid"></div><p class="note">Ein Teil antippen: Es erscheint dort, wo dein Fadenkreuz hinzeigt.</p></div></div>
+
+<div id="menu"></div>
+<div id="loading"><div class="logo">Tüftelinsel</div><p>Lädt …</p></div>
+
+<script src="lib/peerjs.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
