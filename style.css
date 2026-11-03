@@ -27,7 +27,7 @@ canvas#game { position: fixed; inset: 0; width: 100%; height: 100%; display: blo
   text-shadow: 3px 3px 0 #000, 0 0 40px rgba(255, 140, 0, .35); }
 
 /* Menüs */
-#menu, #spawn { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center;
+#menu, #blocks { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center;
   background: rgba(10, 8, 25, .55); touch-action: pan-y;
   padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
 #menu:empty { display: none; }
@@ -82,45 +82,58 @@ input:focus { outline: none; border-color: var(--gold); }
 .help { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 15px; line-height: 1.35; }
 .help b { color: var(--yellow); white-space: nowrap; }
 
-/* Bauteile-Menü */
-#spawngrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
-#spawngrid button { background: rgba(0, 0, 0, .3); border: 2px solid var(--line); border-radius: 10px; padding: 12px 6px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-#spawngrid button:active, #spawngrid button:hover { background: rgba(200, 120, 0, .6); border-color: var(--gold); }
-#spawngrid .ic { font-size: 38px; line-height: 1; }
-#spawngrid .nm { font-size: 15px; font-weight: bold; }
+/* Block-Menü */
+#blockgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+#blockgrid button { background: rgba(0, 0, 0, .3); border: 2px solid var(--line); border-radius: 10px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+#blockgrid button:active, #blockgrid button:hover { background: rgba(200, 120, 0, .6); border-color: var(--gold); }
+#blockgrid img { width: 48px; height: 48px; image-rendering: pixelated; }
+#blockgrid span { font-size: 12px; font-weight: bold; line-height: 1.15; text-align: center; }
+
+/* Welten */
+.worlds { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 42vh; overflow-y: auto; }
+.worlds li { display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, .25); border-radius: 8px; padding: 8px 10px; }
+.worlds .wn { flex: 1; min-width: 0; }
+.worlds .wn b { display: block; font-size: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.worlds .wn small { color: var(--dim); font-size: 12px; }
+.worlds button { background: rgba(0, 0, 0, .3); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 15px; font-weight: bold; }
+.worlds button.hot { background: rgba(200, 120, 0, .85); border-color: transparent; }
+.newworld { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; margin-top: 10px; }
+.newworld .field { flex: 1; min-width: 140px; margin: 0; }
+.newworld button { background: rgba(200, 120, 0, .85); border: 0; border-radius: 6px; padding: 11px 16px; font-size: 18px; font-weight: bold; }
 
 /* Anzeige im Spiel */
+#underwater { position: fixed; inset: 0; z-index: 5; pointer-events: none; background: rgba(20, 70, 140, .35); }
 #hud { position: fixed; inset: 0; z-index: 10; pointer-events: none; }
 #hud button { pointer-events: auto; }
 #cross { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; }
-#cross i { position: absolute; inset: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--ink); }
-#cross.on i { background: var(--gold); inset: 5px; }
+#cross::before, #cross::after { content: ''; position: absolute; background: #fff; box-shadow: 0 0 0 1px var(--ink); }
+#cross::before { left: 10px; top: 2px; width: 2px; height: 18px; }
+#cross::after { top: 10px; left: 2px; height: 2px; width: 18px; }
 #aim { position: absolute; left: 50%; top: calc(50% + 22px); transform: translateX(-50%); font-size: 14px; font-weight: bold; text-shadow: 1px 1px 0 #000, 0 0 4px #000; white-space: nowrap; }
 #topbar { position: absolute; left: max(12px, env(safe-area-inset-left)); top: max(12px, env(safe-area-inset-top)); display: flex; gap: 8px; align-items: center; }
 #topbar button, .tb { background: rgba(15, 20, 45, .72); border: 2px solid rgba(255, 255, 255, .25); border-radius: 12px; color: #fff; font-weight: bold; }
 #topbar button { height: 46px; min-width: 46px; padding: 0 12px; font-size: 20px; }
 #topbar button span { font-size: 16px; }
-#count { font-size: 14px; font-weight: bold; color: var(--dim); text-shadow: 1px 1px 0 #000; }
-#toolinfo { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); text-align: center; text-shadow: 1px 1px 0 #000, 0 0 6px #000; pointer-events: none; max-width: 50vw; }
-#toolinfo b { display: block; font-size: 22px; color: var(--gold); font-style: italic; }
-#toolinfo span { font-size: 14px; color: #fff; }
-#tools { position: absolute; bottom: max(10px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 6px; padding: 6px; background: rgba(15, 20, 45, .55); border-radius: 16px; }
-#tools button { width: 52px; height: 52px; border-radius: 12px; border: 2px solid transparent; background: rgba(0, 0, 0, .25); font-size: 26px; position: relative; }
-#tools button.on { border-color: var(--gold); background: rgba(200, 120, 0, .75); }
-#tools button small { position: absolute; right: 3px; bottom: 1px; font-size: 10px; color: var(--dim); }
+#info { font-size: 13px; font-weight: bold; color: var(--dim); text-shadow: 1px 1px 0 #000; }
+#hotbar { position: absolute; bottom: max(10px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 5px; background: rgba(15, 20, 45, .6); border-radius: 12px; }
+#hotbar button { width: 52px; height: 52px; border-radius: 9px; border: 3px solid transparent; background: rgba(0, 0, 0, .3); position: relative; padding: 0; }
+#hotbar button img { width: 40px; height: 40px; image-rendering: pixelated; display: block; margin: auto; }
+#hotbar button.on { border-color: var(--gold); background: rgba(200, 120, 0, .55); }
+#hotbar button small { position: absolute; left: 3px; top: 0; font-size: 10px; color: var(--dim); }
 #msgs { position: absolute; left: max(12px, env(safe-area-inset-left)); top: 70px; display: flex; flex-direction: column; gap: 4px; max-width: 40vw; }
 #msgs div { background: rgba(15, 20, 45, .72); border-radius: 8px; padding: 6px 10px; font-size: 15px; animation: fade 6s forwards; }
 #msgs b { margin-right: 6px; }
 @keyframes fade { 0%, 80% { opacity: 1; } 100% { opacity: 0; } }
-#seatinfo { position: absolute; top: 72px; left: 50%; transform: translateX(-50%); background: rgba(15, 20, 45, .72); padding: 6px 14px; border-radius: 10px; font-size: 15px; }
-#lockhint { position: absolute; left: 50%; top: 62%; transform: translateX(-50%); background: rgba(15, 20, 45, .8); padding: 10px 18px; border-radius: 10px; font-weight: bold; }
+#flyinfo { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); background: rgba(15, 20, 45, .72); padding: 6px 14px; border-radius: 10px; font-size: 15px; font-weight: bold; }
+#lockhint, #loadinfo { position: absolute; left: 50%; top: 62%; transform: translateX(-50%); background: rgba(15, 20, 45, .8); padding: 10px 18px; border-radius: 10px; font-weight: bold; }
+#loadinfo { top: 40%; font-size: 20px; }
 
 /* Touch */
 #touch { display: none; }
 body.touch #touch { display: block; }
-body.touch #tools { bottom: max(8px, env(safe-area-inset-bottom)); }
-body.touch #tools button small { display: none; }
-#stick { position: absolute; left: 0; bottom: 0; width: 38vw; height: 62vh; pointer-events: auto; }
+body.touch #hotbar button small { display: none; }
+body.touch #hotbar { bottom: max(6px, env(safe-area-inset-bottom)); }
+#stick { position: absolute; left: 0; bottom: 70px; width: 36vw; height: 58vh; pointer-events: auto; }
 #stick i { position: absolute; width: 130px; height: 130px; margin: -65px 0 0 -65px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, .35); background: rgba(15, 20, 45, .3); display: none; }
 #stick i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; background: rgba(255, 255, 255, .55); transform: translate(var(--kx, 0), var(--ky, 0)); }
 #stick.on i { display: block; }
@@ -128,13 +141,16 @@ body.touch #tools button small { display: none; }
 .tb span { font-size: 30px; line-height: 1; }
 .tb em { font-style: normal; font-size: 11px; margin-top: 2px; color: var(--dim); }
 .tb.down { background: rgba(200, 120, 0, .8); border-color: var(--gold); }
-#bAct { right: max(28px, env(safe-area-inset-right)); bottom: 110px; width: 112px; height: 112px; border-radius: 50%; border-width: 3px; }
-#bAct span { font-size: 46px; }
+.tb.lit { border-color: var(--gold); }
+#bPlace { right: max(24px, env(safe-area-inset-right)); bottom: 150px; width: 104px; height: 104px; border-radius: 50%; border-width: 3px; }
+#bPlace span { font-size: 42px; }
 .tb.small { width: 76px; height: 76px; border-radius: 50%; }
 .tb.small span { font-size: 26px; }
-#bAlt { right: calc(max(28px, env(safe-area-inset-right)) + 128px); bottom: 104px; }
-#bJump { right: calc(max(28px, env(safe-area-inset-right)) + 20px); bottom: 20px; width: 70px; height: 70px; }
-#bUse { right: calc(max(28px, env(safe-area-inset-right)) + 112px); bottom: 20px; width: 70px; height: 70px; }
-#grabctl { position: absolute; right: calc(max(28px, env(safe-area-inset-right)) + 6px); bottom: 236px; display: flex; gap: 8px; pointer-events: auto; }
-#grabctl .tb { position: static; width: 56px; height: 56px; border-radius: 14px; font-size: 26px; }
-@media (max-height: 560px) { #bAct { bottom: 90px; width: 96px; height: 96px; } #grabctl { bottom: 196px; } #tools button { width: 44px; height: 44px; font-size: 22px; } }
+#bBreak { right: calc(max(24px, env(safe-area-inset-right)) + 118px); bottom: 150px; width: 88px; height: 88px; }
+#bJump { right: calc(max(24px, env(safe-area-inset-right)) + 14px); bottom: 70px; width: 72px; height: 72px; }
+#bFly { right: calc(max(24px, env(safe-area-inset-right)) + 100px); bottom: 70px; width: 64px; height: 64px; }
+#bDown { right: calc(max(24px, env(safe-area-inset-right)) + 14px); bottom: 262px; width: 64px; height: 64px; }
+@media (max-height: 560px) {
+  #bPlace { bottom: 130px; width: 90px; height: 90px; } #bBreak { bottom: 132px; width: 76px; height: 76px; right: calc(max(24px, env(safe-area-inset-right)) + 104px); }
+  #bDown { bottom: 228px; } #hotbar button { width: 42px; height: 42px; } #hotbar button img { width: 32px; height: 32px; }
+}
