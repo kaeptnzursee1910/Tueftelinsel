@@ -1,9 +1,9 @@
-// Tüftelinsel – Online-Multiplayer über WebRTC (PeerJS), aufgebaut wie bei Horizon Rush.
+// Tüftelinsel – Online-Mehrspieler über WebRTC (PeerJS), aufgebaut wie bei Horizon Rush.
 // Die Relay-Zugangsdaten stehen nicht im Code. Jedes Gerät gibt sie einmal ein ("Online-Schlüssel"),
 // sie bleiben nur im Speicher dieses Browsers. Gleicher Speicherplatz wie Horizon Rush (gleiche Adresse).
 
 export const Net = {
-  PREFIX: 'tueftel-v1-',
+  PREFIX: 'tueftel-v2-',
   limit: 4,
   peer: null, isHost: false, conns: new Map(), hostConn: null, code: null,
   myId: null, onMsg: null, onDrop: null, nextId: 1,

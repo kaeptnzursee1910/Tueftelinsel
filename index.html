@@ -16,6 +16,7 @@
 </head>
 <body>
 <canvas id="game"></canvas>
+<div id="underwater" hidden></div>
 
 <!-- Anzeige im Spiel -->
 <div id="hud" hidden>
@@ -23,36 +24,32 @@
   <div id="aim"></div>
   <div id="topbar">
     <button id="bMenu" title="Menü (Esc)">☰</button>
-    <button id="bSpawn" title="Bauteile (Tab)">📦 <span>Bauteile</span></button>
-    <button id="bUndo" title="Rückgängig (Z)">↶</button>
-    <span id="count"></span>
+    <button id="bBlocks" title="Alle Blöcke (E)">🧱 <span>Blöcke</span></button>
+    <span id="info"></span>
   </div>
-  <div id="toolinfo"><b id="toolname"></b><span id="toolhint"></span></div>
-  <div id="tools"></div>
+  <div id="hotbar"></div>
   <div id="msgs"></div>
-  <div id="seatinfo" hidden>Du sitzt am Steuer: Stick = fahren, <b>⤒</b> = Düsen</div>
+  <div id="flyinfo" hidden>🕊️ Fliegen</div>
 
   <!-- Touch-Steuerung -->
   <div id="touch">
     <div id="stick"><i></i></div>
-    <button class="tb" id="bAct"><span>✋</span></button>
-    <button class="tb small" id="bAlt"><span>❄️</span><em>Einfrieren</em></button>
+    <button class="tb" id="bPlace"><span>🧱</span><em>Bauen</em></button>
+    <button class="tb small" id="bBreak"><span>⛏️</span><em>Abbauen</em></button>
     <button class="tb small" id="bJump"><span>⤒</span><em>Springen</em></button>
-    <button class="tb small" id="bUse"><span>👆</span><em>Benutzen</em></button>
-    <div id="grabctl" hidden>
-      <button class="tb tiny" id="bFar">＋</button>
-      <button class="tb tiny" id="bNear">－</button>
-      <button class="tb tiny" id="bRot">⟳</button>
-    </div>
+    <button class="tb small" id="bFly"><span>🕊️</span><em>Fliegen</em></button>
+    <button class="tb small" id="bDown" hidden><span>⤓</span><em>Runter</em></button>
   </div>
   <div id="lockhint" hidden>Klicke ins Bild, um weiterzuspielen</div>
+  <div id="loadinfo" hidden>Insel wird geladen …</div>
 </div>
 
-<!-- Bauteile-Menü -->
-<div id="spawn" hidden><div class="panel wide"><header><h2>Bauteile</h2><button class="backbtn" data-close>Schließen ✕</button></header><div id="spawngrid"></div><p class="note">Ein Teil antippen: Es erscheint dort, wo dein Fadenkreuz hinzeigt.</p></div></div>
+<!-- Block-Menü -->
+<div id="blocks" hidden><div class="panel wide"><header><h2>Blöcke</h2><button class="backbtn" data-close>Schließen ✕</button></header><div id="blockgrid"></div><p class="note">Einen Block antippen: Er kommt in das gewählte Fach der Schnellleiste.</p></div></div>
 
 <div id="menu"></div>
 <div id="loading"><div class="logo">Tüftelinsel</div><p>Lädt …</p></div>
+<input type="file" id="importfile" accept=".json,application/json" hidden>
 
 <script src="lib/peerjs.min.js"></script>
 <script type="module" src="js/main.js"></script>
